@@ -110,7 +110,7 @@ def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
     
     #stride, names, pt, jit, onnx, engine = model.stride, model.names, model.pt, model.jit, model.onnx, model.engine
     
-    stride, names, pt, engine = model.stride, model.names, model.model, model.engine  # Access model.model instead of model.pt
+    stride, names, pt = model.stride, model.names, model.model  # Access model.model instead of model.pt
     
     imgsz = check_img_size(imgsz, s=stride)  # check image size
 
