@@ -115,7 +115,7 @@ def run(weights=ROOT / 'checkpoints/yolov5-odconvnext.pt',  # model.pt path(s)
     model = ckpt['model']  # Assuming the model is stored under the key 'model'
     
     #model=torch.load(args.model_load)
-    model=torch.load(opt.model_load)
+    #model=torch.load(opt.model_load)
 
     # https://stackoverflow.com/questions/75135877/attributeerror-gelu-object-has-no-attribute-approximate
     
