@@ -108,7 +108,10 @@ def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
     ckpt = torch.load('yolov5s.pt', map_location=torch.device('cpu'), weights_only=False) 
     model = ckpt['model']  # Assuming the model is stored under the key 'model'
     
-    stride, names, pt, jit, onnx, engine = model.stride, model.names, model.pt, model.jit, model.onnx, model.engine
+    #stride, names, pt, jit, onnx, engine = model.stride, model.names, model.pt, model.jit, model.onnx, model.engine
+    
+    stride, names, pt, jit, onnx, engine = model.stride, model.names, model.model, model.jit, model.onnx, model.engine  # Access model.model instead of model.pt
+    
     imgsz = check_img_size(imgsz, s=stride)  # check image size
 
     # Half
