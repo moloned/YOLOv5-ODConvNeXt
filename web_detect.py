@@ -12,16 +12,17 @@ Usage - sources:
                                                              'rtsp://example.com/media.mp4'  # RTSP, RTMP, HTTP stream
 
 Usage - formats:
-    $ python path/to/detect.py --weights yolov5s.pt                 # PyTorch
-                                         yolov5s.torchscript        # TorchScript
-                                         yolov5s.onnx               # ONNX Runtime or OpenCV DNN with --dnn
-                                         yolov5s.xml                # OpenVINO
-                                         yolov5s.engine             # TensorRT
-                                         yolov5s.mlmodel            # CoreML (MacOS-only)
-                                         yolov5s_saved_model        # TensorFlow SavedModel
-                                         yolov5s.pb                 # TensorFlow GraphDef
-                                         yolov5s.tflite             # TensorFlow Lite
-                                         yolov5s_edgetpu.tflite     # TensorFlow Edge TPU
+    $ python path/to/detect.py --weights yolov5s.pt                       # PyTorch
+                                         yolov5s.torchscript              # TorchScript
+                                         yolov5s.onnx                     # ONNX Runtime or OpenCV DNN with --dnn
+                                         yolov5s.xml                      # OpenVINO
+                                         yolov5s.engine                   # TensorRT
+                                         yolov5s.mlmodel                  # CoreML (MacOS-only)
+                                         yolov5s_saved_model              # TensorFlow SavedModel
+                                         yolov5s.pb                       # TensorFlow GraphDef
+                                         yolov5s.tflite                   # TensorFlow Lite
+                                         yolov5s_edgetpu.tflite           # TensorFlow Edge TPU
+                                         checkpoints/yolov5-odconvnext.pt # trained YOLOv5-ODConvNeXt model
 """
 
 #########################################################################################################
@@ -58,7 +59,7 @@ from utils.torch_utils import select_device, time_sync
 
 
 @torch.no_grad()
-def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
+def run(weights=ROOT / 'checkpoints/yolov5-odconvnext.pt',  # model.pt path(s)
         source=ROOT / 'data/images',  # file/dir/URL/glob, 0 for webcam
         data=ROOT / 'data/coco128.yaml',  # dataset.yaml path
         imgsz=(640, 640),  # inference size (height, width)
@@ -110,7 +111,7 @@ def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
     if isinstance(device, str):  # Check if device is a string
         device = torch.device(device)  # Create a PyTorch device object
         
-    ckpt = torch.load('yolov5s.pt', map_location=torch.device('cpu'), weights_only=False) 
+    ckpt = torch.load('', map_location=torch.device('cpu'), weights_only=False) 
     model = ckpt['model']  # Assuming the model is stored under the key 'model'
     
     #stride, names, pt, jit, onnx, engine = model.stride, model.names, model.pt, model.jit, model.onnx, model.engine
