@@ -114,6 +114,25 @@ def run(weights=ROOT / 'checkpoints/yolov5-odconvnext.pt',  # model.pt path(s)
     ckpt = torch.load('checkpoints/yolov5-odconvnext.pt', map_location=torch.device('cpu'), weights_only=False) 
     model = ckpt['model']  # Assuming the model is stored under the key 'model'
     
+    model=torch.load(args.model_load)
+
+    # https://stackoverflow.com/questions/75135877/attributeerror-gelu-object-has-no-attribute-approximate
+    
+    # replace all torch-10 GELU's by torch-12 GELU
+    def torchmodify(name) :
+        a=name.split('.')
+        for i,s in enumerate(a) :
+            if s.isnumeric() :
+                a[i]="_modules['"+s+"']"
+        return '.'.join(a)
+    
+    import torch.nn as nn
+    
+    for name, module in model.named_modules() :
+        if isinstance(module,nn.GELU) :
+        e	xec('model.'+torchmodify(name)+'=nn.GELU()')
+        
+    
     #stride, names, pt, jit, onnx, engine = model.stride, model.names, model.pt, model.jit, model.onnx, model.engine
     
     stride, names, pt = model.stride, model.names, model.model  # Access model.model instead of model.pt
