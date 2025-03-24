@@ -58,7 +58,7 @@ from utils.torch_utils import select_device, time_sync
 
 
 @torch.no_grad()
-def run(#weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
+def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
         source=ROOT / 'data/images',  # file/dir/URL/glob, 0 for webcam
         data=ROOT / 'data/coco128.yaml',  # dataset.yaml path
         imgsz=(640, 640),  # inference size (height, width)
@@ -86,12 +86,7 @@ def run(#weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
         dnn=False,  # use OpenCV DNN for ONNX inference
         ):
     
-    # Assuming 'yolov5s.pt' is the path to your weight file
-    # Removing 'strict' argument as it's causing the error
-    ckpt = torch.load('yolov5s.pt', map_location=torch.device('cpu'), weights_only=False) 
 
-    # Accessing model components from the loaded checkpoint
-    model = ckpt['model']  # Assuming the model is stored under the key 'model'
 
     source = str(source)
     save_img = not nosave and not source.endswith('.txt')  # save inference images
@@ -106,8 +101,13 @@ def run(#weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
     (save_dir / 'labels' if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
 
     # Load model
-    device = select_device(device)
-    model = DetectMultiBackend(weights, device=device, dnn=dnn, data=data)
+    #device = select_device(device)
+    #model = DetectMultiBackend(weights, device=device, dnn=dnn, data=data)
+    
+    # Assuming 'yolov5s.pt' is the path to your weight file
+    ckpt = torch.load('yolov5s.pt', map_location=torch.device('cpu'), weights_only=False) 
+    model = ckpt['model']  # Assuming the model is stored under the key 'model'
+    
     stride, names, pt, jit, onnx, engine = model.stride, model.names, model.pt, model.jit, model.onnx, model.engine
     imgsz = check_img_size(imgsz, s=stride)  # check image size
 
