@@ -105,6 +105,11 @@ def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
     #model = DetectMultiBackend(weights, device=device, dnn=dnn, data=data)
     
     # Assuming 'yolov5s.pt' is the path to your weight file
+    # Load model
+    device = select_device(device)
+    if isinstance(device, str):  # Check if device is a string
+        device = torch.device(device)  # Create a PyTorch device object
+        
     ckpt = torch.load('yolov5s.pt', map_location=torch.device('cpu'), weights_only=False) 
     model = ckpt['model']  # Assuming the model is stored under the key 'model'
     
