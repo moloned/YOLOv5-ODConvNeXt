@@ -111,7 +111,7 @@ def run(weights=ROOT / 'checkpoints/yolov5-odconvnext.pt',  # model.pt path(s)
     if isinstance(device, str):  # Check if device is a string
         device = torch.device(device)  # Create a PyTorch device object
         
-    ckpt = torch.load('', map_location=torch.device('cpu'), weights_only=False) 
+    ckpt = torch.load('checkpoints/yolov5-odconvnext.pt', map_location=torch.device('cpu'), weights_only=False) 
     model = ckpt['model']  # Assuming the model is stored under the key 'model'
     
     #stride, names, pt, jit, onnx, engine = model.stride, model.names, model.pt, model.jit, model.onnx, model.engine
