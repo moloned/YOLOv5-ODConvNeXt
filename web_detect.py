@@ -130,7 +130,7 @@ def run(weights=ROOT / 'checkpoints/yolov5-odconvnext.pt',  # model.pt path(s)
     
     for name, module in model.named_modules() :
         if isinstance(module,nn.GELU) :
-        e	xec('model.'+torchmodify(name)+'=nn.GELU()')
+        exec('model.'+torchmodify(name)+'=nn.GELU()')
         
     
     #stride, names, pt, jit, onnx, engine = model.stride, model.names, model.pt, model.jit, model.onnx, model.engine
